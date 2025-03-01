@@ -1,0 +1,31 @@
+/* Sidebar Styling */
+#sidebar {
+    width: 300px; /* Increased width */
+    height: 871px; /* Full Height */
+    background: #cfc9c9; /* White Background */
+    box-shadow: 5px 0 10px rgba(0, 0, 0, 0.2); /* Subtle Shadow */
+    padding-top: 20px;
+}
+
+/* Sidebar Links */
+.sidebar-link {
+    color: black !important; /* Black text */
+    font-size: 16px;
+    font-weight: 500;
+    padding: 12px 20px;
+    display: flex;
+    align-items: center;
+    transition: background 0.3s ease-in-out, color 0.3s ease-in-out;
+}
+
+.sidebar-link:hover {
+    background: black; /* Black background on hover */
+    color: white !important; /* White text on hover */
+    border-radius: 5px;
+}
+
+/* Sidebar Icons */
+.icon {
+    width: 32px; /* Increased size */
+
+}

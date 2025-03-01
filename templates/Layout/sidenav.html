@@ -1,0 +1,53 @@
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+<nav id="sidebar" class="text-white d-flex flex-column align-items-center p-3 shadow-lg" style=" height: auto;;">
+    <!-- NMDC Logo at the top -->
+    <div class="text-center mb-4">
+        <img src="{% static 'images/nmdc.png' %}" alt="NMDC Logo" class="img-fluid" style="width: 100px;">
+    </div>
+
+    <!-- Navigation Links -->
+    <ul class="nav flex-column w-100">
+        <li class="nav-item">
+            <a class="nav-link d-flex align-items-center sidebar-link" href="#" onclick="loadPage('sms.html')">
+                <img src="{% static 'images/sms.png' %}" class="me-3 icon"> <span>Steel Melting Shop</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link d-flex align-items-center sidebar-link" href="#" onclick="loadPage('caster.html')">
+                <img src="{% static 'images/caster.png' %}" class="me-3 icon"> <span>Caster</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link d-flex align-items-center sidebar-link" href="#" onclick="loadPage('mills.html')">
+                <img src="{% static 'images/mills.png' %}" class="me-3 icon"> <span>Mills</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link d-flex align-items-center sidebar-link" href="{% url 'blastfurnace' %}" onclick="loadPage('blast_furnace.html')">
+                <img src="{% static 'images/blastfurnace.png' %}" class="me-3 icon"> <span>Blast Furnace</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link d-flex align-items-center sidebar-link" href="#" onclick="loadPage('pbs.html')">
+                <img src="{% static 'images/pbs.png' %}" class="me-3 icon"> <span>Power Blowing Station</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link d-flex align-items-center sidebar-link" href="#" onclick="loadPage('sinter.html')">
+                <img src="{% static 'images/sinter.png' %}" class="me-3 icon"> <span>Sinter</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link d-flex align-items-center sidebar-link" href="#" onclick="loadPage('coke_oven.html')">
+                <img src="{% static 'images/co.png' %}" class="me-3 icon"> <span>Coke Oven</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link d-flex align-items-center sidebar-link" href="#" onclick="loadPage('bpp.html')">
+                <img src="{% static 'images/boiler.png' %}" class="me-3 icon"> <span>BPP</span>
+            </a>
+        </li>
+    </ul>
+</nav>

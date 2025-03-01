@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Furnace Monitoring Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .card {
+            margin: 10px;
+        }
+        .status-indicator {
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+        .green { background-color: green; }
+        .red { background-color: red; }
+        .box {
+            border: 2px solid #007bff;
+            padding: 2px;
+            text-align: center;
+            margin: 1px 0;
+            border-radius: 10px;
+            background-color: white;
+        }
+        input[type=text] {
+            width: 70px;
+        }
+
+        
+    </style>
+</head>
+<body>
+    <!--Banner-->
+    <div class="card-body">
+        <div class="container mt-4">
+            <div class="container">
+                <img src="logo.png" class="position-absolute top-0 start-0" alt="Image" style="position: absolute; height: 80px; width: 200px ;">
+                </div>
+              
+        </div>
+    </div>
+    <!--Banner-->
+    <div class="container-fluid">
+        <h2 class="text-center my-3" style="background-color: rgb(138, 202, 207); font-family: cursive;">Blast Furnace Monitoring Dashboard</h2>
+        <div class="row"> 
+            <div class="col-lg-5">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="container mt-4">
+                            <h5 class="card-title">Blast Pressure</h5>
+                            <table class="table table-borderless table-striped">
+                                <tbody>
+                                   <tr><td><div class="d-flex"><p>Cold Blast Pressure:</td><td><input type="text" class="form-control rounded-pill" placeholder=""></td><td>Kg/Cm2</p></div></td></tr>
+                                    <tr><td><div class="d-flex"><p>Hot Blast Pressure:</td><td><input type="text" class="form-control rounded-pill" placeholder=""></td><td>Kg/Cm2</p></div></td></tr>
+                                    <tr><td><div class="d-flex"><p>Cold Blast Flow:</td><td><input type="text" class="form-control rounded-pill" placeholder=""></td><td>Nm3/h</p></div></td></tr>
+                                    <tr><td><div class="d-flex"><p>Hot Blast Flow:</td><td><input type="text" class="form-control rounded-pill" placeholder=""></td><td>Nm3/h</p></div></td></tr>
+                                    <tr><td><div class="d-flex"><p>Hot Blast Temperature:</td><td><input type="text" class="form-control rounded-pill" placeholder=""></td><td>°C</p></div></td></tr>
+                                    <tr><td><div class="d-inline-flex"><p>RAFT:</td><td><input type="text" class="form-control rounded-pill" placeholder=""></td><td>°C</p></div></td><td><div class="d-inline-flex"><p>New Calc.:</td><td><input style="width: 70px" type="text" class="form-control rounded-pill" placeholder=""></p></div></td></tr>
+                                    <tr><td><div class="d-flex"><p>Top Pressure:</td><td><input type="text" class="form-control rounded-pill" placeholder=""></td><td>Kg/Cm2</p></div></td></tr>
+                                    <tr><td><div class="d-flex"><p>D - Pressurfe Burden:</td><td><input type="text" class="form-control rounded-pill" placeholder=""></td><td>Kg/Cm2</p></div></td></tr>
+                                    <tr><td><div class="d-flex"><p>Discharge Level:</td><td><input type="text" class="form-control rounded-pill" placeholder=""></td><td>m</p></div></td></tr>
+                                    <tr><td><div class="d-flex"><p>Current Burden Level:</td><td><input type="text" class="form-control rounded-pill" placeholder=""></td><td>m</p></div></td></tr>
+                                    <tr><td><div class="d-flex"><p>Moisture In Hot Blast:</td><td><input type="text" class="form-control rounded-pill" placeholder=""></td><td>Gr/Nm3</p></div></td></tr>
+                                    <tr><td><div class="d-flex"><p>Coal injection Rate:</td><td><input type="text" class="form-control rounded-pill" placeholder=""></td><td>Kg/THM</p></div></td></tr>
+                                    <tr><td><div class="d-inline-flex"><p>Coal Injection Rate:</td><td><input type="text" class="form-control rounded-pill" placeholder=""></td><td>Ton/hr</p></div></td><td><div class="d-inline-flex"><p>SP: </td><td><input type="text" class="form-control rounded-pill" placeholder=""></p></div></td></tr>
+                                    <tr><td><div class="d-flex"><p>Oxygen Injection:</td><td><input type="text" class="form-control rounded-pill" placeholder=""></td><td>Nm3/hr</p></div></td></tr>
+                                    <tr><td><div class="d-flex"><p>Top_DP:</td><td><input type="text" class="form-control rounded-pill" placeholder=""></td><td>Kg/Cm2</p></div></td></tr>
+                                    <tr><td><div class="d-flex"><p>Mid_DP:</td><td><input type="text" class="form-control rounded-pill" placeholder=""></td><td>Kg/Cm2</p></div></td></tr>
+                                    <tr><td><div class="d-flex"><p>Bottom_DP:</td><td><input type="text" class="form-control rounded-pill" placeholder=""></td><td>Kg/Cm2</p></div></td></tr>
+                                    <tr><td><div class="d-inline-flex"><p>Bottom(K)/Mid(K):</td><td><input type="text" class="form-control rounded-pill" placeholder=""></p></div></td><td><div class="d-inline-flex"><p><input type="text" class="form-control rounded-pill" placeholder=""></p></div></td></tr>
+                                    <tr><td><div class="d-flex"><p>Permeability(K-SUM):</td><td><input type="text" class="form-control rounded-pill" placeholder=""></p></div></td></tr>
+                                    <tr><td><p>Charge Per Shift:</p></td>
+                                    <td><div class="d-inline-flex"><p>A&nbsp;&nbsp;<input type="text" class="form-control rounded-pill" placeholder=""></p></div></td>
+                                    <td><div class="d-inline-flex"><p>B&nbsp;&nbsp;<input type="text" class="form-control rounded-pill" placeholder=""></p></div></td>
+                                    <td><div class="d-inline-flex"><p>C&nbsp;&nbsp;<input type="text" class="form-control rounded-pill" placeholder=""></p></div></td></tr>
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Blast Flow</h5>
+                        <table class="table table-borderless table-striped">
+                            <tbody>
+                                <tr><td><p>Hot Metal Temp.</p></td>
+                                    <td><div class="d-inline-flex"><p>TH-1&nbsp;&nbsp;<input type="text" class="form-control rounded-pill" placeholder=""></p></div></td>
+                                    <td><div class="d-inline-flex"><p>TH-2&nbsp;&nbsp;<input type="text" class="form-control rounded-pill" placeholder=""></p></div></td>
+                                    <td><div class="d-inline-flex"><p>TH-3&nbsp;&nbsp;<input type="text" class="form-control rounded-pill" placeholder=""></p></div></td>
+                                    <td><div class="d-inline-flex"><p>TH-4&nbsp;&nbsp;<input type="text" class="form-control rounded-pill" placeholder=""></p></div></td>
+                                </tr>
+
+                                <tr><td><p>Uptake Temp.</p></td>
+                                    <td><div class="d-inline-flex"><p>A&nbsp;&nbsp;<input type="text" class="form-control rounded-pill" placeholder=""></p></div></td>
+                                    <td><div class="d-inline-flex"><p>B&nbsp;&nbsp;<input type="text" class="form-control rounded-pill" placeholder=""></p></div></td>
+                                    <td><div class="d-inline-flex"><p>C&nbsp;&nbsp;<input type="text" class="form-control rounded-pill" placeholder=""></p></div></td>
+                                    <td><div class="d-inline-flex"><p>D&nbsp;&nbsp;<input type="text" class="form-control rounded-pill" placeholder=""></p></div></td>
+                                </tr>
+                            </tbody>
+                        </table>    
+                    </div>
+                </div>
+            <!-- </div> -->
+            <!-- <div class="col-lg-4"> -->
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Temperatures</h5>
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-striped">
+                                <thead class="table-dark">
+                                    <tr>
+                                        <th>Parameter</th>
+                                        <th>Total Flow</th>
+                                        <th>Pressure</th>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                
+                                        <th></th>
+                                        <th>Tank Level</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Tuyere Cooling</td>
+                                        <td><input type="text" class="form-control rounded-pill" placeholder="">m3/hr</td>
+                                        <td><div class="d-inline-flex"><p><input type="text" class="form-control rounded-pill" placeholder=""></p></div>Kg/cm2</td>
+                                        <td><div class="d-inline-flex"><p><input type="text" class="form-control rounded-pill" placeholder=""></p></div>Kg/cm2</td>
+                                        <td><input type="text" class="form-control rounded-pill" placeholder="">%</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Stack Cooling</td>
+                                        <td><input type="text" class="form-control rounded-pill" placeholder="">m3/hr</td>
+                                        <td><input type="text" class="form-control rounded-pill" placeholder="">Kg/cm2</td>
+                                        <td></td>
+                                        <td><input type="text" class="form-control rounded-pill" placeholder="">%</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Hearth & Bottom</td>
+                                        <td><input type="text" class="form-control rounded-pill" placeholder="">m3/hr</td>
+                                        <td><input type="text" class="form-control rounded-pill" placeholder="">Kg/cm2</td>
+                                        <td></td>
+                                        <td><input type="text" class="form-control rounded-pill" placeholder="">%</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Secondary Cooling</td>
+                                        <td><input type="text" class="form-control rounded-pill" placeholder="">m3/hr</td>
+                                        <td><input type="text" class="form-control rounded-pill" placeholder="">Kg/cm2</td>
+                                        <td></td>
+                                        <td><input type="text" class="form-control rounded-pill" placeholder="">%</td>
+                                    </tr>
+                                    <tr>
+                                        <td>BLT Cooling Flow</td>
+                                        <td><input type="text" class="form-control rounded-pill" placeholder="">m3/hr</td>
+                                        <td></td>
+                                        <td></td>
+                                        <td><input type="text" class="form-control rounded-pill" placeholder="">Mm</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Heat Load (GJ/hr)</td>
+                                        <td><div class="d-inline-flex"><p>Stack<input type="text" class="form-control rounded-pill" placeholder=""></p></div></td>
+                                        <td><div class="d-inline-flex"><p>Tuyere<input type="text" class="form-control rounded-pill" placeholder=""></p></div></td>
+                                        <td></td>
+                                        <td><div class="d-inline-flex"><p>Hearth<input type="text" class="form-control rounded-pill" placeholder=""></p></div></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            <!-- </div> -->
+            <!-- <div class="col-lg-4"> -->
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">CPP/PCI Weights</h5>
+                        <table class="table table-borderless table-striped ">
+                            <tbody>
+                                <tr>
+                                    <td><p>Feed Tank-1:</p></td>
+                                    <td><div class="d-inline-flex"><p><input type="text" class="form-control rounded-pill" placeholder="">Ton</div></td>
+                                    <td><p>PCI N2 Supply PR:</p></td>
+                                    <td><div class="d-inline-flex"><p><input type="text" class="form-control rounded-pill" placeholder="">Kg/cm2</div></td>
+                                </tr>
+                                <tr>
+                                    <td><p>Feed Tank-2:</p></td>
+                                    <td><div class="d-inline-flex"><p><input type="text" class="form-control rounded-pill" placeholder="">Ton</div></td>
+                                    <td><p>Inst. Supply PR:</p></td>
+                                    <td><div class="d-inline-flex"><p><input type="text" class="form-control rounded-pill" placeholder="">Kg/cm2</div></td>
+                                </tr>
+                                <tr>
+                                    <td><p>Feed Tank-3:</p></td>
+                                    <td><div class="d-inline-flex"><p><input type="text" class="form-control rounded-pill" placeholder="">Ton</div></td>
+                                    <td><p>Lances on Coal</p></td>
+                                    <td><div class="d-inline-flex"><p><input type="text" class="form-control rounded-pill" placeholder="">nos.</div></td>
+                                </tr>
+                                <tr>
+                                    <td><p>FCS Weight:</p></td>
+                                    <td><div class="d-inline-flex"><p><input type="text" class="form-control rounded-pill" placeholder="">Ton</div></td>
+                                    <td><p>HMT Production:</p></td>
+                                    <td><div class="d-inline-flex"><p><input type="text" class="form-control rounded-pill" placeholder="">ton/hr</div></td>
+                                </tr>
+                                <tr>
+                                    <td><p>RCS-1 WT:</p></td>
+                                    <td><div class="d-inline-flex"><p><input type="text" class="form-control rounded-pill" placeholder="">Ton</div></td>
+                                </tr>
+                                <tr>
+                                    <td><p>RCS-2 WT:</p></td>
+                                    <td><div class="d-inline-flex"><p><input type="text" class="form-control rounded-pill" placeholder="">Ton</div></td>
+                                    <td><p>Low Pressure N2:</p></td>
+                                    <td><div class="d-inline-flex"><p><input type="text" class="form-control rounded-pill" placeholder="">Kg/cm2</div></td>
+                                </tr>
+                            </tbody>
+                        </table>    
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
