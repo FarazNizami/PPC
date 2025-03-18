@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 import json
-from .models import BlastFurnace_CPP_PCI_Weights  # ✅ Added import
+from .models import BlastFurnace_CPP_PCI_Weights   
 
 # Home Page View
 def home(request):

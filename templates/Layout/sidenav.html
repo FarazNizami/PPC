@@ -1,53 +1,96 @@
 {% load static %}
 <link rel="stylesheet" href="{% static 'css/style.css' %}">
 
-<nav id="sidebar" class="text-white d-flex flex-column align-items-center p-3 shadow-lg" style=" height: auto;;">
-    <!-- NMDC Logo at the top -->
+<!-- Sidebar -->
+<nav id="sidebar" class="text-white d-flex flex-column align-items-center p-3 shadow-lg">
+    <!-- Toggle Button for Mobile -->
+    <button id="toggleSidebar" class="btn btn-primary d-md-none mb-3">
+        ☰
+    </button>
+
+    <!-- NMDC Logo -->
     <div class="text-center mb-4">
         <img src="{% static 'images/nmdc.png' %}" alt="NMDC Logo" class="img-fluid" style="width: 100px;">
     </div>
 
     <!-- Navigation Links -->
-    <ul class="nav flex-column w-100">
+    <ul class="nav flex-column w-100" id="sidebarMenu">
         <li class="nav-item">
             <a class="nav-link d-flex align-items-center sidebar-link" href="#" onclick="loadPage('sms.html')">
-                <img src="{% static 'images/sms.png' %}" class="me-3 icon"> <span>Steel Melting Shop</span>
+                <img src="{% static 'images/sms.png' %}" class="me-3 icon"> <span class="nav-text">Steel Melting Shop</span>
             </a>
         </li>
         <li class="nav-item">
             <a class="nav-link d-flex align-items-center sidebar-link" href="#" onclick="loadPage('caster.html')">
-                <img src="{% static 'images/caster.png' %}" class="me-3 icon"> <span>Caster</span>
+                <img src="{% static 'images/caster.png' %}" class="me-3 icon"> <span class="nav-text">Caster</span>
             </a>
         </li>
         <li class="nav-item">
             <a class="nav-link d-flex align-items-center sidebar-link" href="#" onclick="loadPage('mills.html')">
-                <img src="{% static 'images/mills.png' %}" class="me-3 icon"> <span>Mills</span>
+                <img src="{% static 'images/mills.png' %}" class="me-3 icon"> <span class="nav-text">Mills</span>
             </a>
         </li>
         <li class="nav-item">
             <a class="nav-link d-flex align-items-center sidebar-link" href="{% url 'blastfurnace' %}" onclick="loadPage('blast_furnace.html')">
-                <img src="{% static 'images/blastfurnace.png' %}" class="me-3 icon"> <span>Blast Furnace</span>
+                <img src="{% static 'images/blastfurnace.png' %}" class="me-3 icon"> <span class="nav-text">Blast Furnace</span>
             </a>
         </li>
         <li class="nav-item">
             <a class="nav-link d-flex align-items-center sidebar-link" href="#" onclick="loadPage('pbs.html')">
-                <img src="{% static 'images/pbs.png' %}" class="me-3 icon"> <span>Power Blowing Station</span>
+                <img src="{% static 'images/pbs.png' %}" class="me-3 icon"> <span class="nav-text">Power Blowing Station</span>
             </a>
         </li>
         <li class="nav-item">
             <a class="nav-link d-flex align-items-center sidebar-link" href="#" onclick="loadPage('sinter.html')">
-                <img src="{% static 'images/sinter.png' %}" class="me-3 icon"> <span>Sinter</span>
+                <img src="{% static 'images/sinter.png' %}" class="me-3 icon"> <span class="nav-text">Sinter</span>
             </a>
         </li>
         <li class="nav-item">
             <a class="nav-link d-flex align-items-center sidebar-link" href="#" onclick="loadPage('coke_oven.html')">
-                <img src="{% static 'images/co.png' %}" class="me-3 icon"> <span>Coke Oven</span>
+                <img src="{% static 'images/co.png' %}" class="me-3 icon"> <span class="nav-text">Coke Oven</span>
             </a>
         </li>
         <li class="nav-item">
             <a class="nav-link d-flex align-items-center sidebar-link" href="#" onclick="loadPage('bpp.html')">
-                <img src="{% static 'images/boiler.png' %}" class="me-3 icon"> <span>BPP</span>
+                <img src="{% static 'images/boiler.png' %}" class="me-3 icon"> <span class="nav-text">BPP</span>
             </a>
         </li>
     </ul>
 </nav>
+
+<!-- JavaScript for Toggle Effect -->
+<script>
+    document.getElementById("toggleSidebar").addEventListener("click", function() {
+        document.getElementById("sidebar").classList.toggle("collapsed");
+    });
+</script>
+
+<!-- CSS for Responsive Sidebar -->
+<style>
+    #sidebar {
+        width: 250px;
+        transition: width 0.3s ease;
+        height: auto;
+    }
+    #sidebar.collapsed {
+        width: 80px;
+    }
+    #sidebar.collapsed .nav-text {
+        display: none;
+    }
+    .nav-text {
+        transition: opacity 0.3s ease;
+    }
+    .icon {
+        width: 30px;
+        height: 30px;
+    }
+    @media (max-width: 768px) {
+        #sidebar {
+            width: 80px;
+        }
+        .nav-text {
+            display: none;
+        }
+    }
+</style>

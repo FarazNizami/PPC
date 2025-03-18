@@ -1,607 +1,535 @@
-{% extends 'Layout/base.html' %}
+{% extends 'layout/base.html' %}
+
 {% block title %}Blast Furnace Monitoring Dashboard{% endblock %}
-{% block content %}
+
+{% block content %}{% load static %}
 <style>
-   body {
-   background-color: #f8f9fa;
-   }
-   .card {
-   margin: 10px;
-   }
-   .status-indicator {
-   width: 15px;
-   height: 15px;
-   border-radius: 50%;
-   display: inline-block;
-   }
-   .green { background-color: green; }
-   .red { background-color: red; }
-   .box {
-   border: 2px solid #007bff;
-   padding: 2px;
-   text-align: center;
-   margin: 1px 0;
-   border-radius: 10px;
-   background-color: white;
-   }
-   input[type=text] {
-   width: 70px;
-   }
-</style>
-<div class="container-fluid">
-    <div class="row">
-        <h2 class="text-center my-3" style="background-color: rgb(138, 202, 207); font-family: cursive;">
-            Blast Furnace Monitoring Dashboard
-        </h2>
-    </div>
-    <div class="row">
-        <div class="card">
-            <div class="card-body">
-                <h5 class="card-title">Blast Furnace Data</h5>
-                    <div class="row">
-                        <div class="col-lg-4">
-                            <div class="card" style="height: 400px;">
-                                <!-- Cold Blast Pressure -->
-                                <div class="row m-3">
-                                    <div class="col-md-6">
-                                        <label for="cold_blast_pressure" class="form-label"><strong> Cold Blast Pressure:</strong></label>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <input type="text" class="form-control" id="cold_blast_pressure" name="cold_blast_pressure">
-                                    </div>
-                                    <div class="col-md-3">
-                                        <p class="mt-2">Kg/Cm²</p>
-                                    </div>
-                                </div>
-    
-                                <!-- Hot Blast Pressure -->
-                                <div class="row m-3">
-                                    <div class="col-md-6">
-                                        <label for="hot_blast_pressure" class="form-label"><strong> Hot Blast Pressure:</strong></label>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <input type="text" class="form-control" id="hot_blast_pressure" name="hot_blast_pressure">
-                                    </div>
-                                    <div class="col-md-3">
-                                        <p class="mt-2">Kg/Cm²</p>
-                                    </div>
-                                </div>
-    
-                                <!-- Cold Blast Flow -->
-                                <div class="row m-3">
-                                    <div class="col-md-6">
-                                        <label for="cold_blast_flow" class="form-label"><strong>Cold Blast Flow: </strong></label>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <input type="text" class="form-control" id="cold_blast_flow" name="cold_blast_flow">
-                                    </div>
-                                    <div class="col-md-3">
-                                        <p class="mt-2">Nm³/h</p>
-                                    </div>
-                                </div>
-    
-                                <!-- Hot Blast Flow -->
-                                <div class="row m-3">
-                                    <div class="col-md-6">
-                                        <label for="hot_blast_flow" class="form-label"><strong>Hot Blast Flow: </strong></label>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <input type="text" class="form-control" id="hot_blast_flow" name="hot_blast_flow">
-                                    </div>
-                                    <div class="col-md-3">
-                                        <p class="mt-2">Nm³/h</p>
-                                    </div>
-                                </div>
-    
-                                <!-- Hot Blast Temperature -->
-                                <div class="row m-3">
-                                    <div class="col-md-6">
-                                        <label for="hot_blast_temperature" class="form-label"><strong> Hot Blast Temperature:</strong></label>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <input type="text" class="form-control" id="hot_blast_temperature" name="hot_blast_temperature">
-                                    </div>
-                                    <div class="col-md-3">
-                                        <p class="mt-2">°C</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-    
-                        <div class="col-lg-4">
-                            <div class="card" style="height: 400px;">
-                                <!-- RAFT -->
-                                <div class="row m-3">
-                                    <div class="col-md-6">
-                                        <label for="raft" class="form-label"><strong>RAFT: </strong></label>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <input type="text" class="form-control" id="raft" name="raft">
-                                    </div>
-                                    <div class="col-md-3">
-                                        <p class="mt-2">°C</p>
-                                    </div>
-                                </div>
-    
-                                <!-- New Calc -->
-                                <div class="row m-3">
-                                    <div class="col-md-6">
-                                        <label for="new_calc" class="form-label"><strong> New Calc:</strong></label>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <input type="text" class="form-control" id="new_calc" name="new_calc">
-                                    </div>
-                                    <div class="col-md-3"></div>
-                                </div>
-    
-                                <!-- Top Pressure -->
-                                <div class="row m-3">
-                                    <div class="col-md-6">
-                                        <label for="top_pressure" class="form-label"><strong>Top Pressure: </strong></label>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <input type="text" class="form-control" id="top_pressure" name="top_pressure">
-                                    </div>
-                                    <div class="col-md-3">
-                                        <p class="mt-2">Kg/Cm²</p>
-                                    </div>
-                                </div>
-    
-                                <!-- Discharge Level -->
-                                <div class="row m-3">
-                                    <div class="col-md-6">
-                                        <label for="discharge_level" class="form-label"><strong>Discharge Level: </strong></label>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <input type="text" class="form-control" id="discharge_level" name="discharge_level">
-                                    </div>
-                                    <div class="col-md-3">
-                                        <p class="mt-2">m</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-    
-                        <div class="col-lg-4">
-                            <div class="card" style="height: 400px;">
-                                <!-- Current Burden Level -->
-                                <div class="row m-3">
-                                    <div class="col-md-6">
-                                        <label for="burden_level" class="form-label"><strong> Current Burden Level:</strong></label>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <input type="text" class="form-control" id="burden_level" name="burden_level">
-                                    </div>
-                                    <div class="col-md-3">
-                                        <p class="mt-2">m</p>
-                                    </div>
-                                </div>
-    
-                                <!-- Coal Injection Rate -->
-                                <div class="row m-3">
-                                    <div class="col-md-6">
-                                        <label for="coal_injection_rate" class="form-label"><strong>Coal Injection Rate: </strong></label>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <input type="text" class="form-control" id="coal_injection_rate" name="coal_injection_rate">
-                                    </div>
-                                    <div class="col-md-3">
-                                        <p class="mt-2">Kg/THM</p>
-                                    </div>
-                                </div>
-    
-                                <!-- Oxygen Injection -->
-                                <div class="row m-3">
-                                    <div class="col-md-6">
-                                        <label for="oxygen_injection" class="form-label"><strong>Oxygen Injection: </strong></label>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <input type="text" class="form-control" id="oxygen_injection" name="oxygen_injection">
-                                    </div>
-                                    <div class="col-md-3">
-                                        <p class="mt-2">Nm³/hr</p>
-                                    </div>
-                                </div>
-    
-                                <!-- Charge Per Shift -->
-                                <div class="row m-3">
-                                    <div class="col-md-6">
-                                        <label class="form-label"><strong>Charge Per Shift:</strong></label>
-                                    </div>
-                                    <div class="col-md-6 text-center">
-                                        <div class="row">
-                                            <div class="col-4"><strong>A</strong></div>
-                                            <div class="col-4"><strong>B</strong></div>
-                                            <div class="col-4"><strong>C</strong></div>
-                                        </div>
-                                        <div class="row mt-1">
-                                            <div class="col-4"><input type="text" class="form-control" id="charge_A" name="charge_A"></div>
-                                            <div class="col-4"><input type="text" class="form-control" id="charge_B" name="charge_B"></div>
-                                            <div class="col-4"><input type="text" class="form-control" id="charge_C" name="charge_C"></div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-    
-                    <div class="row" style="place-content: end; margin-right: 10px;">
-                        <button type="button" class="btn btn-primary w-auto">Submit</button>
-                    </div>
-            </div>
-        </div>
-    </div>
-    
-    <div class="row">
-        <div class="card">
-            <div class="card-body">
-                <div class="row">
-                    <div class="col-lg-6">
-                        <h5 class="card-title">Blast Flow</h5>
-                        <div class="card" style="height: 436px;">
-                            <div class="card-body">
-                                <div class="row m-3">
-                                    <div class="col-md-6">
-                                        <label class="form-label"><strong>Hot Metal Temp.</strong></label>
-                                    </div>
-                                    <div class="row text-center">
-                                        <div class="col-3"><strong>TH-1</strong></div>
-                                        <div class="col-3"><strong>TH-2</strong></div>
-                                        <div class="col-3"><strong>TH-3</strong></div>
-                                        <div class="col-3"><strong>TH-4</strong></div>
-                                    </div>
-                                    <div class="row mt-1 text-center">
-                                        <div class="col-3"><input type="text" class="form-control" id="hot_temp_th1" name="hot_temp_th1"></div>
-                                        <div class="col-3"><input type="text" class="form-control" id="hot_temp_th2" name="hot_temp_th2"></div>
-                                        <div class="col-3"><input type="text" class="form-control" id="hot_temp_th3" name="hot_temp_th3"></div>
-                                        <div class="col-3"><input type="text" class="form-control" id="hot_temp_th4" name="hot_temp_th4"></div>
-                                    </div>
-                                </div>
-                                <div class="row m-3">
-                                    <div class="col-md-6">
-                                        <label class="form-label"><strong>Uptake Temp.</strong></label>
-                                    </div>
-                                    <div class="row text-center">
-                                        <div class="col-3"><strong>A</strong></div>
-                                        <div class="col-3"><strong>B</strong></div>
-                                        <div class="col-3"><strong>C</strong></div>
-                                        <div class="col-3"><strong>D</strong></div>
-                                    </div>
-                                    <div class="row mt-1 text-center">
-                                        <div class="col-3"><input type="text" class="form-control" id="uptake_temp_a" name="uptake_temp_a"></div>
-                                        <div class="col-3"><input type="text" class="form-control" id="uptake_temp_b" name="uptake_temp_b"></div>
-                                        <div class="col-3"><input type="text" class="form-control" id="uptake_temp_c" name="uptake_temp_c"></div>
-                                        <div class="col-3"><input type="text" class="form-control" id="uptake_temp_d" name="uptake_temp_d"></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row" style="place-content: end; margin-right: 10px; margin-bottom: inherit;">
-                                <button type="button" class="btn btn-primary w-auto">Submit</button>
-                            </div>
-                        </div>
-                    </div>
-    
-                    <div class="col-lg-6">
-                        <h5 class="card-title">Temperatures</h5>
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="row m-3">
-                                    <div class="col-md-4">
-                                        <label class="form-label"><strong>Tuyere Cooling</strong></label>
-                                    </div>
-                                    <div class="col-md-2">
-                                        <input type="text" class="form-control" id="tuyere_cooling_1" name="tuyere_cooling_1">
-                                    </div>
-                                    <div class="col-md-2">
-                                        <span>Kg/cm²</span>
-                                    </div>
-                                    <div class="col-md-2">
-                                        <input type="text" class="form-control" id="tuyere_cooling_2" name="tuyere_cooling_2">
-                                    </div>
-                                    <div class="col-md-2">
-                                        <span>Kg/cm²</span>
-                                    </div>
-                                </div>
-    
-                                <!-- Stack Cooling -->
-                                <div class="row m-3">
-                                    <div class="col-md-4">
-                                        <label class="form-label"><strong>Stack Cooling</strong></label>
-                                    </div>
-                                    <div class="col-md-2">
-                                        <input type="text" class="form-control" id="stack_cooling_flow" name="stack_cooling_flow">
-                                    </div>
-                                    <div class="col-md-2">
-                                        <span>m³/hr</span>
-                                    </div>
-                                    <div class="col-md-2">
-                                        <input type="text" class="form-control" id="stack_cooling_pressure" name="stack_cooling_pressure">
-                                    </div>
-                                    <div class="col-md-2">
-                                        <span>Kg/cm²</span>
-                                    </div>
-                                </div>
-    
-                                <!-- Hearth & Bottom -->
-                                <div class="row m-3">
-                                    <div class="col-md-4">
-                                        <label class="form-label"><strong>Hearth & Bottom</strong></label>
-                                    </div>
-                                    <div class="col-md-2">
-                                        <input type="text" class="form-control" id="hearth_bottom_flow" name="hearth_bottom_flow">
-                                    </div>
-                                    <div class="col-md-2">
-                                        <span>m³/hr</span>
-                                    </div>
-                                    <div class="col-md-2">
-                                        <input type="text" class="form-control" id="hearth_bottom_pressure" name="hearth_bottom_pressure">
-                                    </div>
-                                    <div class="col-md-2">
-                                        <span>Kg/cm²</span>
-                                    </div>
-                                </div>
-    
-                                <!-- Secondary Cooling -->
-                                <div class="row m-3">
-                                    <div class="col-md-4">
-                                        <label class="form-label"><strong>Secondary Cooling</strong></label>
-                                    </div>
-                                    <div class="col-md-2">
-                                        <input type="text" class="form-control" id="secondary_cooling_flow" name="secondary_cooling_flow">
-                                    </div>
-                                    <div class="col-md-2">
-                                        <span>m³/hr</span>
-                                    </div>
-                                    <div class="col-md-2">
-                                        <input type="text" class="form-control" id="secondary_cooling_pressure" name="secondary_cooling_pressure">
-                                    </div>
-                                    <div class="col-md-2">
-                                        <span>Kg/cm²</span>
-                                    </div>
-                                </div>
-    
-                                <!-- BLT Cooling Flow -->
-                                <div class="row m-3">
-                                    <div class="col-md-4">
-                                        <label class="form-label"><strong>BLT Cooling Flow</strong></label>
-                                    </div>
-                                    <div class="col-md-2">
-                                        <input type="text" class="form-control" id="blt_cooling_flow" name="blt_cooling_flow">
-                                    </div>
-                                    <div class="col-md-2">
-                                        <span>m³/hr</span>
-                                    </div>
-                                    <div class="col-md-2">
-                                        <input type="text" class="form-control" id="blt_cooling_mm" name="blt_cooling_mm">
-                                    </div>
-                                    <div class="col-md-2">
-                                        <span>mm</span>
-                                    </div>
-                                </div>
-    
-                                <!-- Heat Load -->
-                                <div class="row m-3">
-                                    <div class="col-md-4">
-                                        <label class="form-label"><strong>Heat Load (GJ/hr)</strong></label>
-                                    </div>
-                                    <div class="col-md-2">
-                                        <label>Stack</label>
-                                        <input type="text" class="form-control" id="heat_load_stack" name="heat_load_stack">
-                                    </div>
-                                    <div class="col-md-2">
-                                        <label>Tuyere</label>
-                                        <input type="text" class="form-control" id="heat_load_tuyere" name="heat_load_tuyere">
-                                    </div>
-                                    <div class="col-md-2">
-                                        <label>Hearth</label>
-                                        <input type="text" class="form-control" id="heat_load_hearth" name="heat_load_hearth">
-                                    </div>
-                                </div>
-                                <div class="row" style="place-content: end; margin-right: 10px;">
-                                    <button type="button" class="btn btn-primary w-auto">Submit</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    
-    <div class="row">
-        <div class="card">
-            <div class="card-body">
-                <h5 class="card-title">CPP/PCI Weights</h5>
-                <div class="card">
-                    <form id="cppPciForm">
-                        <div class="row"> 
-                            <div class="col-lg-6">
-                                <!-- Cold Blast Pressure -->
-                                <div class="row m-3">
-                                    <div class="col-md-3">
-                                        <label for="feed_tank_1" class="form-label"><strong> Feed Tank-1:</strong></label>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <input type="text" class="form-control" id="feed_tank_1" name="feed_tank_1">
-                                    </div>
-                                    <div class="col-md-3">
-                                        <p class="mt-2">Ton</p>
-                                    </div>
-                                </div>
-    
-                                <div class="row m-3">
-                                    <div class="col-md-3">
-                                        <label for="feed_tank_2" class="form-label"><strong>Feed Tank-2</strong></label>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <input type="text" class="form-control" id="feed_tank_2" name="feed_tank_2">
-                                    </div>
-                                    <div class="col-md-3">
-                                        <p class="mt-2">Ton</p>
-                                    </div>
-                                </div>
-    
-                                <div class="row m-3">
-                                    <div class="col-md-3">
-                                        <label for="feed_tank_3" class="form-label"><strong>Feed Tank-3:</strong></label>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <input type="text" class="form-control" id="feed_tank_3" name="feed_tank_3">
-                                    </div>
-                                    <div class="col-md-3">
-                                        <p class="mt-2">Ton</p>
-                                    </div>
-                                </div>
-    
-                                <div class="row m-3">
-                                    <div class="col-md-3">
-                                        <label for="fcs_weight" class="form-label"><strong>FCS Weight:</strong></label>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <input type="text" class="form-control" id="fcs_weight" name="fcs_weight">
-                                    </div>
-                                    <div class="col-md-3">
-                                        <p class="mt-2">Ton</p>
-                                    </div>
-                                </div>
-    
-                                <div class="row m-3">
-                                    <div class="col-md-3">
-                                        <label for="rcs_1_wt" class="form-label"><strong>RCS-1 WT:</strong></label>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <input type="text" class="form-control" id="rcs_1_wt" name="rcs_1_wt">
-                                    </div>
-                                    <div class="col-md-3">
-                                        <p class="mt-2">Ton</p>
-                                    </div>
-                                </div>
-    
-                                <div class="row m-3">
-                                    <div class="col-md-3">
-                                        <label for="rcs_2_wt" class="form-label"><strong>RCS-2 WT:</strong></label>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <input type="text" class="form-control" id="rcs_2_wt" name="rcs_2_wt">
-                                    </div>
-                                    <div class="col-md-3">
-                                        <p class="mt-2">Ton</p>
-                                    </div>
-                                </div>
-                            </div>
-    
-                            <div class="col-lg-6">
-                                <div class="row m-3">
-                                    <div class="col-md-3">
-                                        <label for="pci_n2_supply_pr" class="form-label"><strong>PCI N2 Supply PR:</strong></label>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <input type="text" class="form-control" id="pci_n2_supply_pr" name="pci_n2_supply_pr">
-                                    </div>
-                                    <div class="col-md-3">
-                                        <p class="mt-2">Kg/cm²</p>
-                                    </div>
-                                </div>
-    
-                                <div class="row m-3">
-                                    <div class="col-md-3">
-                                        <label for="inst_supply_pr" class="form-label"><strong>Inst. Supply PR:</strong></label>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <input type="text" class="form-control" id="inst_supply_pr" name="inst_supply_pr">
-                                    </div>
-                                    <div class="col-md-3">
-                                        <p class="mt-2">Kg/cm²</p>
-                                    </div>
-                                </div>
-    
-                                <div class="row m-3">
-                                    <div class="col-md-3">
-                                        <label for="lances_on_coal" class="form-label"><strong>Lances on Coal</strong></label>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <input type="text" class="form-control" id="lances_on_coal" name="lances_on_coal">
-                                    </div>
-                                    <div class="col-md-3">
-                                        <p class="mt-2">nos.</p>
-                                    </div>
-                                </div>
-    
-                                <div class="row m-3">
-                                    <div class="col-md-3">
-                                        <label for="hmt_production" class="form-label"><strong>HMT Production:</strong></label>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <input type="text" class="form-control" id="hmt_production" name="hmt_production">
-                                    </div>
-                                    <div class="col-md-3">
-                                        <p class="mt-2">ton/hr</p>
-                                    </div>
-                                </div>
-    
-                                <div class="row m-3">
-                                    <div class="col-md-3">
-                                        <label for="low_pressure_n2" class="form-label"><strong>Low Pressure N2:</strong></label>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <input type="text" class="form-control" id="low_pressure_n2" name="low_pressure_n2">
-                                    </div>
-                                    <div class="col-md-3">
-                                        <p class="mt-2">kg/cm²</p>
-                                    </div>
-                                </div>
-                                
-                            </div>
-                     
-                        </div>
-    
-                </div>
-                
-                <div class="row justify-content-end me-3">
-                    <button type="button" class="btn btn-primary w-auto" onclick="submitForm()">Submit</button>
-                </div>
-            </form>
-
-            </div>
-        </div>
-    </div>
-    
-</div>
-    
-{% endblock %}
-
-{% block scripts %}
-<script>
-    function submitForm() {
-        let formData = {
-            feed_tank_1: document.getElementById("feed_tank_1").value,
-            feed_tank_2: document.getElementById("feed_tank_2").value,
-            feed_tank_3: document.getElementById("feed_tank_3").value,
-            fcs_weight: document.getElementById("fcs_weight").value,
-            rcs_1_wt: document.getElementById("rcs_1_wt").value,
-            rcs_2_wt: document.getElementById("rcs_2_wt").value,
-            pci_n2_supply_pr: document.getElementById("pci_n2_supply_pr").value,
-            inst_supply_pr: document.getElementById("inst_supply_pr").value,
-            lances_on_coal: document.getElementById("lances_on_coal").value,
-            hmt_production: document.getElementById("hmt_production").value,
-            low_pressure_n2: document.getElementById("low_pressure_n2").value,
-        };
-    
-        fetch("{% url 'cpp_pci_weights' %}", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                "X-CSRFToken": "{{ csrf_token }}"
-            },
-            body: JSON.stringify(formData)
-        })
-        .then(response => response.json())
-        .then(data => {
-            alert(data.message);  // Show response message
-            console.log(data);
-        })
-        .catch(error => console.error("Error:", error));
+    body {
+        background-color: #f8f9fa;
+        font-size: 12px;
+        /* Reduce font size */
     }
-    </script>
+
+    .status-indicator {
+        width: 15px;
+        height: 15px;
+        border-radius: 50%;
+        display: inline-block;
+    }
+
+    .green {
+        background-color: green;
+    }
+
+    .red {
+        background-color: red;
+    }
+
+    .box {
+        border: 2px solid #007bff;
+        padding: 2px;
+        text-align: center;
+        margin: 1px 0;
+        border-radius: 10px;
+        background-color: white;
+    }
+
+    /* .  {
+        width: 2cm; */
+    /* Set width to 2cm */
+    /* height: 25px;
+        padding: 5px;
+        font-size: 12px;
+    } */
+
+    input[type=text] {
+        color: chartreuse;
+        background-color: black;
+    }
+
+    .content-container {
+        height: auto;
+        padding: 10px;
+    }
+
+    .equal-height {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    .equal-height .card {
+        flex: 1;
+        min-width: 300px;
+    }
+
+    td {
+        font-size: 16px !important;
+        font-weight: 600 !important;
+
+    }
+
+    .equal-width-table td {
+        width: 33.33%;
+        text-align: center;
+    }
+</style>
+
+<div class="container-fluid content-container">
+    <form method="POST">
+        {% csrf_token %}
+        <div class="row equal-height">
+            <div class="col-lg-3 col-md-12">
+                <div class="card">
+                    <div class="card-body">
+                        <table class="table table-responsive table-borderless table-striped equal-width-table">
+                            <tbody>
+                                <tr>
+                                    <td>Cold Blast Pressure:</td>
+                                    <td><input type="text" class="form-control"
+                                            value="{{ latest_blast_pressure.cold_blast_pressure }}"></td>
+                                    <td>Kg/Cm²</td>
+                                </tr>
+                                <tr>
+                                    <td>Hot Blast Pressure:</td>
+                                    <td><input type="text" class="form-control  "
+                                            value="{{ latest_blast_pressure.hot_blast_pressure }}"></td>
+                                    <td>Kg/Cm²</td>
+                                </tr>
+                                <tr>
+                                    <td>Cold Blast Flow:</td>
+                                    <td><input type="text" class="form-control  "
+                                            value="{{ latest_blast_pressure.cold_blast_flow }}"></td>
+                                    <td>Nm³/h</td>
+                                </tr>
+                                <tr>
+                                    <td>Hot Blast Flow:</td>
+                                    <td><input type="text" class="form-control  "
+                                            value="{{ latest_blast_pressure.hot_blast_flow }}"></td>
+                                    <td>Nm³/h</td>
+                                </tr>
+                                <tr>
+                                    <td>Hot Blast Temperature:</td>
+                                    <td><input type="text" class="form-control  "
+                                            value="{{ latest_blast_pressure.hot_blast_temperature }}"></td>
+                                    <td>°C</td>
+                                </tr>
+                                <tr>
+                                    <td>RAFT:</td>
+                                    <td><input type="text" class="form-control  "
+                                            value="{{ latest_blast_pressure.raft }}"></td>
+                                    <td>°C</td>
+                                </tr>
+                                <tr>
+                                    <td>New Calc:</td>
+                                    <td><input type="text" class="form-control  "
+                                            value="{{ latest_blast_pressure.new_calc }}"></td>
+                                </tr>
+                                <tr>
+                                    <td>Top Pressure:</td>
+                                    <td><input type="text" class="form-control  "
+                                            value="{{ latest_blast_pressure.top_pressure }}"></td>
+                                    <td>Kg/Cm²</td>
+                                </tr>
+                                <tr>
+                                    <td>D-Pressure Burden:</td>
+                                    <td><input type="text" class="form-control  "
+                                            value="{{ latest_blast_pressure.d_pressure_burden }}"></td>
+                                    <td>Kg/Cm²</td>
+                                </tr>
+                                <tr>
+                                    <td>Discharge Level:</td>
+                                    <td><input type="text" class="form-control  "
+                                            value="{{ latest_blast_pressure.discharge_level }}"></td>
+                                    <td>m</td>
+                                </tr>
+                                <tr>
+                                    <td>Current Burden Level:</td>
+                                    <td><input type="text" class="form-control  "
+                                            value="{{ latest_blast_pressure.current_burden_level }}"></td>
+                                    <td>m</td>
+                                </tr>
+                                <tr>
+                                    <td>Moisture in Hot Blast:</td>
+                                    <td><input type="text" class="form-control  "
+                                            value="{{ latest_blast_pressure.moisture_hot_blast }}"></td>
+                                    <td>Gr/Nm³</td>
+                                </tr>
+                                <tr>
+                                    <td>Coal Injection Rate:</td>
+                                    <td><input type="text" class="form-control  "
+                                            value="{{ latest_blast_pressure.coal_injection_rate }}"></td>
+                                    <td>Kg/THM</td>
+                                </tr>
+                                <tr>
+                                    <td>Coal Injection Rate:</td>
+                                    <td><input type="text" class="form-control  "
+                                            value="{{ latest_blast_pressure.coal_injection_rate_ton }}"></td>
+                                    <td>Ton/hr</td>
+                                </tr>
+                                <tr>
+                                    <td>Oxygen Injection:</td>
+                                    <td><input type="text" class="form-control  "
+                                            value="{{ latest_blast_pressure.oxygen_injection }}"></td>
+                                    <td>Nm³/hr</td>
+                                </tr>
+                                <tr>
+                                    <td>Top DP:</td>
+                                    <td><input type="text" class="form-control  "
+                                            value="{{ latest_blast_flow.top_dp }}"></td>
+                                    <td>Kg/Cm²</td>
+                                </tr>
+                                <tr>
+                                    <td>Mid DP:</td>
+                                    <td><input type="text" class="form-control  "
+                                            value="{{ latest_blast_flow.mid_dp }}"></td>
+                                    <td>Kg/Cm²</td>
+                                </tr>
+                                <tr>
+                                    <td>Bottom DP:</td>
+                                    <td><input type="text" class="form-control  "
+                                            value="{{ latest_blast_flow.bottom_dp }}"></td>
+                                    <td>Kg/Cm²</td>
+                                </tr>
+                                <tr>
+                                    <td>Bottom(K) / Mid(K):</td>
+                                    <td>
+                                        <input type="text" class="form-control " placeholder="Bottom(K)"
+                                            value="{{ latest_blast_flow.bottom_k }}">
+                                    </td>
+                                    <td> <input type="text" class="form-control " placeholder="Mid(K)"
+                                            value="{{ latest_blast_flow.mid_k }}"></td>
+
+                                </tr>
+                                <tr>
+                                    <td>Permeability (K-SUM):</td>
+                                    <td><input type="text" class="form-control "
+                                            value="{{ latest_blast_flow.permeability_k_sum }}"></td>
+                                </tr>
+                                <tr>
+                                    <td>Charges Per Shift:</td>
+
+                                </tr>
+                                <tr class="text-center">
+                                    <td>A</td>
+                                    <td>B</td>
+                                    <td>C</td>
+                                </tr>
+                                <tr>
+                                    <td><input type="text" class="form-control " style="width: 100%;"
+                                            value="{{ latest_blast_flow.charge_A }}"></td>
+                                    <td><input type="text" class="form-control " style="width: 100%;"
+                                            value="{{ latest_blast_flow.charge_B }}"></td>
+                                    <td><input type="text" class="form-control " style="width: 100%;"
+                                            value="{{ latest_blast_flow.charge_C }}"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-12">
+                <div class="card">
+                    <div class="card-body">
+                        <table class="table table-responsive table-borderless table-striped equal-width-table">
+                            <tbody>
+                                <tr>
+                                    <td>TH-1:</td>
+                                    <td><input type="text" class="form-control  "
+                                            value="{{ latest_blast_flow.hot_metal_temp_th1 }}"></td>
+                                </tr>
+                                <tr>
+                                    <td>TH-2:</td>
+                                    <td><input type="text" class="form-control  "
+                                            value="{{ latest_blast_flow.hot_metal_temp_th2 }}"></td>
+                                </tr>
+                                <tr>
+                                    <td>TH-3:</td>
+                                    <td><input type="text" class="form-control  "
+                                            value="{{ latest_blast_flow.hot_metal_temp_th3 }}"></td>
+                                </tr>
+                                <tr>
+                                    <td>TH-4:</td>
+                                    <td><input type="text" class="form-control  "
+                                            value="{{ latest_blast_flow.hot_metal_temp_th4 }}"></td>
+                                </tr>
+                                <tr>
+                                    <td>Uptake Temperature</td>
+                                </tr>
+                                <tr>
+                                    <td>A</td>
+                                    <td>B</td>
+                                    <td>C</td>
+                                    <td>D</td>
+                                </tr>
+                                <tr>
+                                    <td><input type="text" class="form-control  "
+                                            value="{{ latest_blast_flow.uptake_temp_a }}"></td>
+                                    <td><input type="text" class="form-control  "
+                                            value="{{ latest_blast_flow.uptake_temp_b }}"></td>
+                                    <td><input type="text" class="form-control  "
+                                            value="{{ latest_blast_flow.uptake_temp_c }}"></td>
+                                    <td><input type="text" class="form-control  "
+                                            value="{{ latest_blast_flow.uptake_temp_d }}"></td>
+                                </tr>
+                                <tr>
+                                    <td>Stack:</td>
+                                    <td><input type="text" class="form-control  "
+                                            value="{{ latest_blast_flow.heat_load_stack }}"></td>
+                                    <td>GJ/hr</td>
+                                </tr>
+                                <tr>
+                                    <td>Tuyere:</td>
+                                    <td><input type="text" class="form-control  "
+                                            value="{{ latest_blast_flow.heat_load_tuyere }}"></td>
+                                    <td>GJ/hr</td>
+                                </tr>
+                                <tr>
+                                    <td>Hearth:</td>
+                                    <td><input type="text" class="form-control  "
+                                            value="{{ latest_blast_flow.heat_load_hearth }}"></td>
+                                    <td>GJ/hr</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-12">
+                <div class="card">
+                    <div class="card-body">
+                        <table class=" table table-responsive table-borderless table-striped equal-width-table">
+                            <tbody>
+                                <tr>
+                                    <td>Total Flow:</td>
+                                    <td>Tuyere Cooling:</td>
+                                    <td><input type="text" class="form-control  "
+                                            value="{{ latest_blast_flow.tuyere_cooling }}"></td>
+                                    <td>m³/hr</td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td>Stack Cooling:</td>
+                                    <td><input type="text" class="form-control  "
+                                            value="{{ latest_blast_flow.stack_cooling_flow }}"></td>
+                                    <td>m³/hr</td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td>Hearth & Bottom:</td>
+                                    <td><input type="text" class="form-control  "
+                                            value="{{ latest_blast_flow.hearth_bottom_flow }}"></td>
+                                    <td>m³/hr</td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td>Secondary Cooling:</td>
+                                    <td><input type="text" class="form-control  "
+                                            value="{{ latest_blast_flow.secondary_cooling_flow }}"></td>
+                                    <td>m³/hr</td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td>BLT Cooling FLOW:</td>
+                                    <td><input type="text" class="form-control  "
+                                            value="{{ latest_blast_flow.blt_cooling_flow }}"></td>
+                                    <td>m³/hr</td>
+                                </tr>
+                                <tr>
+                                    <td>Pressure:</td>
+                                    <td>Tuyere Cooling HP:</td>
+                                    <td><input type="text" class="form-control  "
+                                            value="{{ latest_blast_flow.tuyere_cooling_hp }}"></td>
+                                    <td>Kg/Cm²</td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td>Tuyere Cooling LP:</td>
+                                    <td><input type="text" class="form-control  "
+                                            value="{{ latest_blast_flow.tuyere_cooling_lp }}"></td>
+                                    <td>Kg/Cm²</td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td>Stack Cooling:</td>
+                                    <td><input type="text" class="form-control  "
+                                            value="{{ latest_blast_flow.stack_cooling_pressure }}"></td>
+                                    <td>Kg/Cm²</td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td>Hearth & Bottom:</td>
+                                    <td><input type="text" class="form-control  "
+                                            value="{{ latest_blast_flow.hearth_bottom_pressure }}"></td>
+                                    <td>Kg/Cm²</td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td>Secondary Cooling:</td>
+                                    <td><input type="text" class="form-control  "
+                                            value="{{ latest_blast_flow.secondary_cooling_pressure }}"></td>
+                                    <td>Kg/Cm²</td>
+                                </tr>
+                                <tr>
+                                    <td>Tank Level:</td>
+                                    <td>Tuyere Cooling:</td>
+                                    <td><input type="text" class="form-control  "
+                                            value="{{ latest_blast_flow.tuyere_cooling_tank_level }}"></td>
+                                    <td>%</td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td>Stack Cooling:</td>
+                                    <td><input type="text" class="form-control  "
+                                            value="{{ latest_blast_flow.stack_cooling_tank_level }}"></td>
+                                    <td>%</td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td>Hearth & Bottom:</td>
+                                    <td><input type="text" class="form-control  "
+                                            value="{{ latest_blast_flow.hearth_bottom_tank_level }}"></td>
+                                    <td>%</td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td>Secondary Cooling:</td>
+                                    <td><input type="text" class="form-control  "
+                                            value="{{ latest_blast_flow.secondary_cooling_tank_level }}"></td>
+                                    <td>%</td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td>BLT Cooling:</td>
+                                    <td><input type="text" class="form-control  "
+                                            value="{{ latest_blast_flow.blt_cooling_tank_level }}"></td>
+                                    <td>mm</td>
+                                </tr>
+                                <tr>
+                                    <td>Heat Load:</td>
+                                    <td>Stack:</td>
+                                    <td><input type="text" class="form-control  "
+                                            value="{{ latest_blast_flow.heat_load_stack }}"></td>
+                                    <td>HJ/hr</td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td>Tuyere:</td>
+                                    <td><input type="text" class="form-control  "
+                                            value="{{ latest_blast_flow.heat_load_tuyere }}"></td>
+                                    <td>HJ/hr</td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td>Hearth:</td>
+                                    <td><input type="text" class="form-control  "
+                                            value="{{ latest_blast_flow.heat_load_hearth }}"></td>
+                                    <td>HJ/hr</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-12">
+                <div class="card">
+                    <div class="card-body">
+                        <table class=" table table-responsive table-borderless table-striped equal-width-table">
+                            <tbody>
+                                <tr>
+                                    <td>Feed Tank-1:</td>
+                                    <td><input type="text" class="form-control  "
+                                            value="{{ latest_blast_flow.feed_tank_1 }}"></td>
+                                    <td>Ton</td>
+                                </tr>
+                                <tr>
+                                    <td>Feed Tank-2:</td>
+                                    <td><input type="text" class="form-control  "
+                                            value="{{ latest_blast_flow.feed_tank_2 }}"></td>
+                                    <td>Ton</td>
+                                </tr>
+                                <tr>
+                                    <td>Feed Tank-3:</td>
+                                    <td><input type="text" class="form-control  "
+                                            value="{{ latest_blast_flow.feed_tank_3 }}"></td>
+                                    <td>Ton</td>
+                                </tr>
+                                <tr>
+                                    <td>FCS Weight:</td>
+                                    <td><input type="text" class="form-control  "
+                                            value="{{ latest_blast_flow.fcs_weight }}"></td>
+                                    <td>Ton</td>
+                                </tr>
+                                <tr>
+                                    <td>RCS-1 WT:</td>
+                                    <td><input type="text" class="form-control  "
+                                            value="{{ latest_blast_flow.rcs_1_wt }}"></td>
+                                    <td>Ton</td>
+                                </tr>
+                                <tr>
+                                    <td>RCS-2 WT:</td>
+                                    <td><input type="text" class="form-control  "
+                                            value="{{ latest_blast_flow.rcs_2_wt }}"></td>
+                                    <td>Ton</td>
+                                </tr>
+                                <tr>
+                                    <td>PCI N2 Supply PR:</td>
+                                    <td><input type="text" class="form-control  "
+                                            value="{{ latest_blast_flow.pci_n2_supply_pr }}"></td>
+                                    <td>Kg/Cm²</td>
+                                </tr>
+                                <tr>
+                                    <td>Inst. Supply PR:</td>
+                                    <td><input type="text" class="form-control  "
+                                            value="{{ latest_blast_flow.inst_supply_pr }}"></td>
+                                    <td>Kg/Cm²</td>
+                                </tr>
+                                <tr>
+                                    <td>Lances on Coal:</td>
+                                    <td><input type="text" class="form-control  "
+                                            value="{{ latest_blast_flow.lances_on_coal }}"></td>
+                                    <td>nos</td>
+                                </tr>
+                                <tr>
+                                    <td>HMT Production:</td>
+                                    <td><input type="text" class="form-control  "
+                                            value="{{ latest_blast_flow.hmt_production }}"></td>
+                                    <td>ton/hr</td>
+                                </tr>
+                                <tr>
+                                    <td>Low Pressure N2:</td>
+                                    <td><input type="text" class="form-control  "
+                                            value="{{ latest_blast_flow.low_pressure_n2 }}"></td>
+                                    <td>Kg/Cm²</td>
+                                </tr>
+                                <tr>
+                                    <td>FF-Spray Press:</td>
+                                    <td><input type="text" class="form-control  " id="ff_spray_press"
+                                            name="ff_spray_press" required></td>
+                                    <td>kg/cm2</td>
+                                </tr>
+                                <tr>
+                                    <td>FF-Hyd. Press:</td>
+                                    <td><input type="text" class="form-control  " id="ff_hyd_press" name="ff_hyd_press"
+                                            required></td>
+                                    <td>kg/cm2</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="row justify-content-end me-3">
+                <button type="submit" class="btn btn-primary w-auto">Submit</button>
+            </div>
+        </div>
+    </form>
+</div>
+{% endblock %}
+{% block scripts %}
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    document.getElementById("toggleSidebar").addEventListener("click", function () {
+        document.getElementById("sidebar").classList.toggle("collapsed");
+    });
+</script>
 {% endblock %}
